@@ -16,6 +16,10 @@ const User ={
   findById: async (id) => {
     const [rows] = await pool.execute('SELECT id, email, created_at FROM users WHERE id = ?', [id]);
     return rows[0];
+  },
+  getAll: async()=> {
+    const [rows] = await pool.execute('SELECT id, email, created_at FROM users');
+    return rows;
   }
 }
 module.exports = User;

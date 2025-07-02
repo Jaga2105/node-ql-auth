@@ -7,7 +7,7 @@ const authRouter = require("./routes/authRoute")
 app.use(express.json());
 
 // Routes
-app.use('/api/user', authRouter);
+app.use('/api/users', authRouter);
 
 pool
   .getConnection()
