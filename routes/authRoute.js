@@ -3,7 +3,7 @@ const router = express.Router();
 const { register, login } = require('../controllers/authController');
 const { validate } = require('../middlewares/validation');
 const { registerRules, loginRules, updateRules } = require('../validator/userValidator');
-const { getAllUsers, updateUser } = require('../controllers/userController');
+const { getAllUsers, updateUser, deleteUser } = require('../controllers/userController');
 const { authenticate } = require('../middlewares/authenticator');
 
 // Public routes
@@ -26,6 +26,11 @@ router.put(
   validate(updateRules),
   updateUser
 );
+router.delete(
+    '/:id',
+    authenticate,
+    deleteUser
+)
 
 
 module.exports = router;

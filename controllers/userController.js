@@ -32,4 +32,12 @@ module.exports = {
       res.status(500).json({ message: 'Server error' });
     }
   },
+  deleteUser: async (req, res) => {
+    try {
+      await User.delete(req.params.id);
+      res.json({ message: 'User deleted successfully' });
+    } catch (err) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
 };
