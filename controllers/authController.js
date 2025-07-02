@@ -26,7 +26,7 @@ module.exports = {
       const userId = await User.create({ email, password });
       const user = await User.findById(userId);
 
-      const token = jwt.sign({ id: user.id }, secret, { expiresIn });
+      const token = jwt.sign({ id: user.id }, secret, { expiresIn:expiresIn });
 
       res.status(201).json({ token, user });
     } catch (err) {
@@ -53,7 +53,7 @@ module.exports = {
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
-      const token = jwt.sign({ id: user.id }, secret, { expiresIn });
+      const token = jwt.sign({ id: user.id }, secret, { expiresIn:expiresIn });
 
       res.json({
         token,
@@ -68,3 +68,30 @@ module.exports = {
     }
   },
 };
+
+// authenticate: async (req, res, next) =>{
+//   const authHeader = req.headers.authorization;
+
+//   if(authHeader){
+//     const token = authHeader.split(" ")[1];
+//     if(!token){
+//       return res.status(400).json({
+//         error: "No token found!"
+//       })
+//     }
+
+//     jwt.verify(token, process.env.JWT_SECRET, (err, user)=>{
+//       if(err){
+//         return res.status(403).json({
+//           error: "Token not valid!"
+//         })
+//       }
+//       req.user= user;
+//       next();
+//     })
+//   }else{
+//     return res.status(401).json({
+//       error: "Unauthorized! No token found"
+//     })
+//   }
+// }

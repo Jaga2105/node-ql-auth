@@ -20,6 +20,14 @@ const User ={
   getAll: async()=> {
     const [rows] = await pool.execute('SELECT id, email, created_at FROM users');
     return rows;
-  }
+  },
+  update: async(id, { email, password }) => {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pool.execute(
+      'UPDATE users SET email = ?, password = ? WHERE id = ?',
+      [email, hashedPassword, id]
+    );
+    return true;
+  },
 }
 module.exports = User;

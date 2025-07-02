@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { register, login } = require('../controllers/authController');
 const { validate } = require('../middlewares/validation');
-const { registerRules, loginRules } = require('../validator/userValidator');
-const { getAllUsers } = require('../controllers/userController');
+const { registerRules, loginRules, updateRules } = require('../validator/userValidator');
+const { getAllUsers, updateUser } = require('../controllers/userController');
+const { authenticate } = require('../middlewares/authenticator');
 
 // Public routes
 router.post(
@@ -18,6 +19,13 @@ router.post(
 );
 
 router.get('/', getAllUsers);
+
+router.put(
+  '/:id',
+  authenticate,
+  validate(updateRules),
+  updateUser
+);
 
 
 module.exports = router;
