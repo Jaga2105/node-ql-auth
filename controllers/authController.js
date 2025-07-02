@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+
 // const { secret, expiresIn } = require('../config/jwt');
 const { validationResult } = require("express-validator");
 const User = require("../models/User");
@@ -45,7 +47,7 @@ module.exports = {
       if (!user) {
         return res.status(400).json({ message: "Invalid credentials" });
       }
-
+      
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         return res.status(400).json({ message: "Invalid credentials" });
